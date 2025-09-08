@@ -22,7 +22,7 @@ export default function LoginPage() {
                     <div className='text-center space-y-2'>
 
                         <h1 className='text-3xl font-blod'>Welcome back</h1>
-                        <p className='text-gray-600'>Please enter your account.</p>
+                        <p className='text-gray-600'>Please enter credentails</p>
                     </div>
 
 
@@ -49,7 +49,7 @@ export default function LoginPage() {
                     <form className='space-y-4'>
                         <div className='space-y-2'>
                             <Label htmlFor='email'>Email</Label>
-                            <Input id="email" value={email} required placeholder="Your Email" />
+                            <Input id="email" type='email' value={email} required />
                         </div>
                         <div className='flex items-center justify-between'>
                             <div className='flex items-center space-y-2'>
@@ -57,7 +57,6 @@ export default function LoginPage() {
                                 <Label htmlFor='remeber'>Remember me</Label>
                             </div>
                             <a href="#" className='text-sm text-primary-500 hover:text-primary-600'>Forgot password?</a>
-
                         </div>
 
                         <div className='space-y-2'>
