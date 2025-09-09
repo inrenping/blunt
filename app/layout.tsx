@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Providers } from "@/components/providers";
+import { ModeToggle } from "@/components/mode-toggle";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,9 +27,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`antialiased`}
       >
-        {children}
+        <Providers>
+          <header>
+            <div className="max-w-7xl mx-auto flex items-center px-4 py-6">
+              <div className="flex items-center gap-4">
+                <p className="text-muted-foreground hidden md:block line-clamp-1 text-sm">
+                  blunt.
+                </p>
+              </div>
+              <div className="ml-auto flex gap-2">
+                <ModeToggle />
+              </div>
+            </div>
+          </header>
+          {children}
+        </Providers>
       </body>
     </html>
   );
