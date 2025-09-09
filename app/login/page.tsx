@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Mail } from 'lucide-react'
 
 export default function LoginPage() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [email, setEmail] = useState('');
 
     return (
@@ -64,7 +65,7 @@ export default function LoginPage() {
                         </div>
                     </form>
                     <div className='text-center text-sm'>
-                        Don't have an account? <a href="#" className='text-primary-500 font-medium hover:text-primary-600'>Sign up</a>
+                        Dont have an account? <a href="#" className='text-primary-500 font-medium hover:text-primary-600'>Sign up</a>
                     </div>
                 </div>
             </motion.div>
