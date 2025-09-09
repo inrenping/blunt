@@ -9,7 +9,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Mail } from 'lucide-react'
 
 export default function LoginPage() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [email, setEmail] = useState('');
 
     return (
@@ -19,7 +18,7 @@ export default function LoginPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 className="w-full max-w-md">
-                <div className='bg-white rounded-2xl shadow-xl p-8 space-y-6'>
+                <div className='bg-white dark:bg-black rounded-2xl shadow-xl p-8 space-y-6'>
                     <div className='text-center space-y-2'>
 
                         <h1 className='text-3xl font-blod'>Welcome back</h1>
@@ -42,7 +41,7 @@ export default function LoginPage() {
                             <span className='w-full border-t border-gray-300'></span>
                         </div>
                         <div className='relative flex justify-center text-xs uppercase'>
-                            <span className='bg-white px-2 text-muted-foreground'>Or</span>
+                            <span className='bg-white dark:bg-black px-2 text-muted-foreground'>Or</span>
                         </div>
                     </div>
 
@@ -50,7 +49,7 @@ export default function LoginPage() {
                     <form className='space-y-4'>
                         <div className='space-y-2'>
                             <Label htmlFor='email'>Email</Label>
-                            <Input id="email" type='email' value={email} required />
+                            <Input id="email" type='email' value={email} required onChange={e => setEmail(e.target.value)} />
                         </div>
                         <div className='flex items-center justify-between'>
                             <div className='flex items-center space-y-2'>
