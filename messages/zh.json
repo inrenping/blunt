@@ -3,6 +3,11 @@
     "home": "blunt."
   },
   "LoginPage": {
-    "login": "登录"
+    "login": "登录",
+    "email": "电子邮箱",
+    "rememberMe": "记住我",
+    "or": "或",
+    "forgotPassword": "忘记密码 ?",
+    "newAccount": "创建一个新账户"
   }
 }

@@ -3,6 +3,11 @@
     "home": "blunt."
   },
   "LoginPage": {
-    "login": "login"
+    "login": "login",
+    "email": "Email",
+    "rememberMe": "remember me",
+    "or": "Or",
+    "forgotPassword": "forgot password ?",
+    "newAccount": "create a new account"
   }
 }
