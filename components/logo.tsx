@@ -5,9 +5,9 @@ export function Logo({ className }: React.ComponentProps<typeof Image>) {
   return (
     <>
       <Image src="/logo.png"
-        className={cn("text-foreground h-6", className)}
-        width={24}
-        height={24}
+        className={cn("text-foreground", className)}
+        width={48}
+        height={48}
         alt="" />
     </>
   )

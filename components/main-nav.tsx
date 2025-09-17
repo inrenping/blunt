@@ -6,19 +6,19 @@ export function MainNav() {
   return (
     <nav className="flex flex-col md:flex-row items-center gap-1">
       <Button variant="ghost" size="sm" asChild>
-        <Link href="/">Home</Link>
+        <Link href="/sports">Sports</Link>
       </Button>
       <Button variant="ghost" size="sm" asChild>
-        <Link href="/experiences">Experiences</Link>
+        <Link href="/features">Features</Link>
       </Button>
       <Button variant="ghost" size="sm" asChild>
-        <Link href="/listings">Listings</Link>
+        <Link href="/maps">Maps</Link>
       </Button>
       <Button variant="ghost" size="sm" asChild>
-        <Link href="/about">About</Link>
+        <Link href="/challenges">Challenges</Link>
       </Button>
       <Button variant="ghost" size="sm" asChild>
-        <Link href="/contact">Contact</Link>
+        <Link href="/subscribe">Subscribe</Link>
       </Button>
     </nav>
   )
