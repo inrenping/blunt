@@ -16,7 +16,7 @@ export function ModeToggle({
       variant="secondary"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className={cn("size-8", className)}
+      className={cn("size-9", className)}
       {...props}
     >
       <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

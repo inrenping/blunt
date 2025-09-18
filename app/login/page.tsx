@@ -26,12 +26,12 @@ export default function LoginPage() {
             <p className='text-gray-600'>Please enter credentails</p>
           </div>
 
-
           {/* socail login */}
           <div className='flex justify-between'>
-            <div className='grid grid-cols-1 gap-4 w-full'>
+            <div className='grid grid-cols-1 gap-4 w-full' >
               <Button variant="outline" className='w-full'>
-                <Mail className="mr-2 h-4 w-8" /> Login with Google
+                <svg aria-label="Google logo" className='dark:invert' width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
+                Login with Google
               </Button>
             </div>
           </div>
@@ -42,22 +42,22 @@ export default function LoginPage() {
               <span className='w-full border-t border-gray-300'></span>
             </div>
             <div className='relative flex justify-center text-xs uppercase'>
-              <span className='bg-white dark:bg-black px-2 text-muted-foreground'>Or</span>
+              <span className='bg-white dark:bg-black px-2 text-muted-foreground'>{t("or")}</span>
             </div>
           </div>
 
           {/* form */}
           <form className='space-y-4'>
             <div className='space-y-2'>
-              <Label htmlFor='email'>Email</Label>
+              <Label htmlFor='email'>{t("email")}</Label>
               <Input id="email" type='email' value={email} required onChange={e => setEmail(e.target.value)} />
             </div>
             <div className='flex items-center justify-between'>
               <div className='flex items-center space-y-2'>
                 <Checkbox id="remeber" />
-                <Label htmlFor='remeber'>Remember me</Label>
+                <Label htmlFor='remeber'>{t("rememberMe")}</Label>
               </div>
-              <a href="#" className='text-sm text-primary-500 hover:text-primary-600'>Forgot password?</a>
+              <a href="#" className='text-sm text-primary-500 hover:text-primary-600'>{t("forgotPassword")}</a>
             </div>
 
             <div className='space-y-2'>
@@ -65,7 +65,7 @@ export default function LoginPage() {
             </div>
           </form>
           <div className='text-center text-sm'>
-            Dont have an account? <a href="#" className='text-primary-500 font-medium hover:text-primary-600'>Sign up</a>
+            <a href="#" className='text-primary-500 font-medium hover:text-primary-600'>{t("newAccount")}</a>
           </div>
         </div>
       </motion.div>
