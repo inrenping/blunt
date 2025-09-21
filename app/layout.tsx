@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import Link from "next/link";
-import { Logo } from "@/components/logo";
-import { MainNav } from "@/components/main-nav";
 import { Providers } from "@/components/providers";
-import { ModeToggle } from "@/components/mode-toggle";
-import { ModeIntl } from "@/components/mode-intl";
 import "./globals.css";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
@@ -42,20 +37,6 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <header>
-              <div className="max-w-7xl mx-auto flex items-center px-4 py-6">
-                <div className="flex items-center gap-4">
-                  <Link href="/">
-                    <Logo /> <span className="sr-only">{title}</span>
-                  </Link>
-                  <MainNav />
-                </div>
-                <div className="ml-auto flex gap-2">
-                  <ModeIntl />
-                  <ModeToggle />
-                </div>
-              </div>
-            </header>
             {children}
           </Providers>
         </NextIntlClientProvider>
