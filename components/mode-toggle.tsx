@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun } from "lucide-react"
+import { IconSun, IconMoon } from "@tabler/icons-react"
 import { useTheme } from "next-themes"
 
 export function ModeToggle({
@@ -19,8 +19,8 @@ export function ModeToggle({
       className={cn("size-9", className)}
       {...props}
     >
-      <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <IconSun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <IconMoon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
     </Button>
   )
 }
