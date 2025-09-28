@@ -5,8 +5,6 @@ import { Logo } from "@/components/logo";
 import { MainNav } from "@/components/main-nav";
 import { ModeToggle } from "@/components/mode-toggle";
 import { ModeIntl } from "@/components/mode-intl";
-import "../globals.css";
-
 
 const title = "Blunt."
 const description = "A example registry for distributing code using shadcn."
