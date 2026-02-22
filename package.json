@@ -1,6 +1,6 @@
 {
   "name": "blunt",
-  "version": "0.1.20250927",
+  "version": "0.1.20260219",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
