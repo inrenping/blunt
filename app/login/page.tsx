@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { storage } from '@/lib/storage';
 
 export default function LoginPage() {
   const [step, setStep] = useState(1); // 1: 邮箱验证, 2: 密码登录
@@ -19,7 +20,7 @@ export default function LoginPage() {
   const router = useRouter();
   const t = useTranslations("LoginPage");
 
-  // 步骤一：验证邮箱
+  // 验证邮箱
   const handleCheckEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -29,7 +30,7 @@ export default function LoginPage() {
 
       if (res.ok) {
         setDisplayName(data.username);
-        setStep(2); // 切换到密码阶段
+        setStep(2);
       } else {
         toast.error(data.message || "邮箱未注册或已禁用");
       }
@@ -40,7 +41,7 @@ export default function LoginPage() {
     }
   };
 
-  // 步骤二：提交登录
+  // 提交登录
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -53,7 +54,10 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem('token', data.token);
+        storage.set('accessToken', data.Token);
+        storage.set('refreshToken', data.RefreshToken);
+        storage.set('user', data.User);
+        storage.set('tokenExpires', data.Expires);
         toast.success("欢迎回来，" + displayName);
         router.push('/dash');
       } else {
