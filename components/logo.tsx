@@ -8,7 +8,8 @@ export function Logo({ className }: { className?: string }) {
         className={cn("text-foreground", className)}
         width={48}
         height={48}
-        alt="" />
+        alt="Logo"
+        unoptimized />
     </>
   )
 }
