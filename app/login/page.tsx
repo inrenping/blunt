@@ -1,75 +1,154 @@
 'use client';
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export default function LoginPage() {
+  const [step, setStep] = useState(1); // 1: 邮箱验证, 2: 密码登录
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState(''); // 存储后端返回的用户名
+  const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
   const t = useTranslations("LoginPage");
+
+  // 步骤一：验证邮箱
+  const handleCheckEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/check?email=${encodeURIComponent(email)}`);
+      const data = await res.json();
+
+      if (res.ok) {
+        setDisplayName(data.username);
+        setStep(2); // 切换到密码阶段
+      } else {
+        toast.error(data.message || "邮箱未注册或已禁用");
+      }
+    } catch (error) {
+      toast.error("网络请求失败");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 步骤二：提交登录
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem('token', data.token);
+        toast.success("欢迎回来，" + displayName);
+        router.push('/dash');
+      } else {
+        toast.error(data.message || "密码错误");
+      }
+    } catch (error) {
+      toast.error("登录时发生错误");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md">
-        <div className='bg-white dark:bg-black rounded-2xl shadow-xl p-8 space-y-6'>
-          <div className='text-center space-y-2'>
+      <motion.div layout className="w-full max-w-md bg-white dark:bg-black rounded-2xl shadow-xl p-8">
 
-            <h1 className='text-3xl font-blod'>Welcome back</h1>
-            <p className='text-gray-600'>Please enter credentails</p>
-          </div>
-
-          {/* socail login */}
-          <div className='flex justify-between'>
-            <div className='grid grid-cols-1 gap-4 w-full' >
-              <Button variant="outline" className='w-full'>
-                <svg aria-label="Google logo" className='dark:invert' width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
-                Login with Google
-              </Button>
-            </div>
-          </div>
-
-          {/* br */}
-          <div className='relative'>
-            <div className='absolute inset-0 flex items-center'>
-              <span className='w-full border-t border-gray-300'></span>
-            </div>
-            <div className='relative flex justify-center text-xs uppercase'>
-              <span className='bg-white dark:bg-black px-2 text-muted-foreground'>{t("or")}</span>
-            </div>
-          </div>
-
-          {/* form */}
-          <form className='space-y-4'>
-            <div className='space-y-2'>
-              <Label htmlFor='email'>{t("email")}</Label>
-              <Input id="email" type='email' value={email} required onChange={e => setEmail(e.target.value)} />
-            </div>
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center space-y-2'>
-                <Checkbox id="remeber" />
-                <Label htmlFor='remeber'>{t("rememberMe")}</Label>
-              </div>
-              <a href="#" className='text-sm text-primary-500 hover:text-primary-600'>{t("forgotPassword")}</a>
-            </div>
-
-            <div className='space-y-2'>
-              <Button type="submit" className="btn btn-wide w-full">{t("login")}</Button>
-            </div>
-          </form>
-          <div className='text-center text-sm'>
-            <a href="#" className='text-primary-500 font-medium hover:text-primary-600'>{t("newAccount")}</a>
-          </div>
+        {/* 头部信息动态切换 */}
+        <div className='text-center space-y-2 mb-6'>
+          <h1 className='text-3xl font-bold'>
+            {step === 1 ? "Welcome" : `Hi, ${displayName}`}
+          </h1>
+          <p className='text-gray-600'>
+            {step === 1 ? "Enter email to get started" : "Please enter your password"}
+          </p>
         </div>
+
+        <AnimatePresence mode="wait">
+          {step === 1 ? (
+            /* 邮箱表单 */
+            <motion.form
+              key="step1"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              onSubmit={handleCheckEmail}
+              className="space-y-4"
+            >
+              <div className='space-y-2'>
+                <Label htmlFor='email'>{t("email")}</Label>
+                <Input
+                  id="email"
+                  type='email'
+                  placeholder="name@company.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Checking..." : "Next Step"}
+              </Button>
+            </motion.form>
+          ) : (
+            /* 密码表单 */
+            <motion.form
+              key="step2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              onSubmit={handleLogin}
+              className="space-y-4"
+            >
+              <div className='space-y-2'>
+                <div className="flex justify-between">
+                  <Label htmlFor='password'>Password</Label>
+                  <button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    className="text-xs text-primary-600 hover:underline"
+                  >
+                    Change Email
+                  </button>
+                </div>
+                <Input
+                  id="password"
+                  type='password'
+                  autoFocus
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Logging in..." : t("login")}
+              </Button>
+            </motion.form>
+          )}
+        </AnimatePresence>
+
+        {step === 1 && (
+          <div className='mt-6 text-center text-sm'>
+            <p className="text-gray-500">Don't have an account? <a href="#" className="text-primary-600 font-medium hover:underline">Sign up</a></p>
+          </div>
+        )}
       </motion.div>
-
-
     </div>
   );
 }
