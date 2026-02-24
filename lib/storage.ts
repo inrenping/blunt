@@ -21,6 +21,8 @@ export const storage = {
     try {
       return JSON.parse(value) as T;
     } catch (e) {
+      console.error(e);
+
       return null;
     }
   },
