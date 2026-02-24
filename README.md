@@ -1,8 +1,8 @@
-# 自学 React
+# 注意
 
-> 仅供学习交流使用
+> 部署之前记得先跑一下 `npm run lint`
 
-参考
+## 参考
 
 - [Create React App](https://nextjs.org/docs/app/api-reference/cli/create-next-app)
 
