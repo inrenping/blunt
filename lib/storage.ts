@@ -2,7 +2,7 @@ const IS_SERVER = typeof window === 'undefined';
 
 export const storage = {
   // 设置缓存
-  set(key: string, value: any) {
+  set(key: string, value: unknown) {
     if (IS_SERVER) return;
     const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
     localStorage.setItem(key, stringValue);
