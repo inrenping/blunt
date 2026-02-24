@@ -11,16 +11,15 @@ import { toast } from "sonner";
 import { storage } from '@/lib/storage';
 
 export default function LoginPage() {
-  const [step, setStep] = useState(1); // 1: 邮箱验证, 2: 密码登录
+  const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState(''); // 存储后端返回的用户名
+  const [displayName, setDisplayName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const t = useTranslations("LoginPage");
 
-  // 验证邮箱
   const handleCheckEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -34,14 +33,13 @@ export default function LoginPage() {
       } else {
         toast.error(data.message || "邮箱未注册或已禁用");
       }
-    } catch (error) {
+    } catch {
       toast.error("网络请求失败");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // 提交登录
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -63,7 +61,7 @@ export default function LoginPage() {
       } else {
         toast.error(data.message || "密码错误");
       }
-    } catch (error) {
+    } catch {
       toast.error("登录时发生错误");
     } finally {
       setIsLoading(false);
@@ -74,7 +72,6 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
       <motion.div layout className="w-full max-w-md bg-white dark:bg-black rounded-2xl shadow-xl p-8">
 
-        {/* 头部信息动态切换 */}
         <div className='text-center space-y-2 mb-6'>
           <h1 className='text-3xl font-bold'>
             {step === 1 ? "Welcome" : `Hi, ${displayName}`}
@@ -86,7 +83,6 @@ export default function LoginPage() {
 
         <AnimatePresence mode="wait">
           {step === 1 ? (
-            /* 邮箱表单 */
             <motion.form
               key="step1"
               initial={{ opacity: 0, x: -20 }}
@@ -111,7 +107,6 @@ export default function LoginPage() {
               </Button>
             </motion.form>
           ) : (
-            /* 密码表单 */
             <motion.form
               key="step2"
               initial={{ opacity: 0, x: 20 }}
@@ -149,7 +144,7 @@ export default function LoginPage() {
 
         {step === 1 && (
           <div className='mt-6 text-center text-sm'>
-            <p className="text-gray-500">Don't have an account? <a href="#" className="text-primary-600 font-medium hover:underline">Sign up</a></p>
+            <p className="text-gray-500">Don&apos;t have an account? <a href="#" className="text-primary-600 font-medium hover:underline">Sign up</a></p>
           </div>
         )}
       </motion.div>
