@@ -5,13 +5,6 @@ import { Providers } from "@/components/providers";
 import "./globals.css";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  Show,
-  UserButton,
-} from "@clerk/nextjs";
 
 
 const title = "Blunt."
@@ -42,25 +35,14 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ClerkProvider>
-          <header className="flex items-center justify-between p-4 border-b">
-            <h1 className="text-lg font-semibold">Blunt</h1>
-            <div className="flex items-center gap-2">
-              <Show when="signed-out">
-                <SignInButton />
-                <SignUpButton />
-              </Show>
-              <Show when="signed-in">
-                <UserButton />
-              </Show>
-            </div>
-          </header>
-          <NextIntlClientProvider messages={messages}>
-            <Providers>
-              {children}
-            </Providers>
-          </NextIntlClientProvider>
-        </ClerkProvider>
+        <header className="flex items-center justify-between p-4 border-b">
+          <h1 className="text-lg font-semibold">Blunt</h1>
+        </header>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>
+            {children}
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
