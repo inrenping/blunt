@@ -24,17 +24,17 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/check?email=${encodeURIComponent(email)}`);
+      const res = await fetch(`/api/auth/check?email=${encodeURIComponent(email)}`);
       const data = await res.json();
 
       if (res.ok) {
         setDisplayName(data.username);
         setStep(2);
       } else {
-        toast.error(data.message || "邮箱未注册或已禁用");
+        toast.error(data.message || t("errorEmailNotRegistered"));
       }
     } catch {
-      toast.error("网络请求失败");
+      toast.error(t("errorNetwork"));
     } finally {
       setIsLoading(false);
     }
@@ -44,7 +44,7 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -56,13 +56,13 @@ export default function LoginPage() {
         storage.set('refreshToken', data.RefreshToken);
         storage.set('user', data.User);
         storage.set('tokenExpires', data.Expires);
-        toast.success("欢迎回来，" + displayName);
+        toast.success(t("welcomeBack", { name: displayName }));
         router.push('/dash');
       } else {
-        toast.error(data.message || "密码错误");
+        toast.error(data.message || t("errorPasswordIncorrect"));
       }
     } catch {
-      toast.error("登录时发生错误");
+      toast.error(t("errorLogin"));
     } finally {
       setIsLoading(false);
     }
@@ -74,10 +74,10 @@ export default function LoginPage() {
 
         <div className='text-center space-y-2 mb-6'>
           <h1 className='text-3xl font-bold'>
-            {step === 1 ? "Welcome" : `Hi, ${displayName}`}
+            {step === 1 ? t("welcome") : t("hi", { name: displayName })}
           </h1>
           <p className='text-gray-600'>
-            {step === 1 ? "Enter email to get started" : "Please enter your password"}
+            {step === 1 ? t("enterEmail") : t("enterPassword")}
           </p>
         </div>
 
@@ -91,6 +91,22 @@ export default function LoginPage() {
               onSubmit={handleCheckEmail}
               className="space-y-4"
             >
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-white dark:bg-black px-2 text-muted-foreground">{t("or")}</span>
+                </div>
+              </div>
+
+              <Button variant="outline" type="button" className="w-full">
+                Google
+              </Button>
+              <Button variant="outline" type="button" className="w-full">
+                GitHub
+              </Button>
+
               <div className='space-y-2'>
                 <Label htmlFor='email'>{t("email")}</Label>
                 <Input
@@ -103,7 +119,7 @@ export default function LoginPage() {
                 />
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Checking..." : "Next Step"}
+                {isLoading ? t("checking") : t("nextStep")}
               </Button>
             </motion.form>
           ) : (
@@ -118,12 +134,14 @@ export default function LoginPage() {
               <div className='space-y-2'>
                 <div className="flex justify-between">
                   <Label htmlFor='password'>Password</Label>
+                  <Label htmlFor='password'>{t("passwordLabel")}</Label>
                   <button
                     type="button"
                     onClick={() => setStep(1)}
                     className="text-xs text-primary-600 hover:underline"
                   >
                     Change Email
+                    {t("changeEmail")}
                   </button>
                 </div>
                 <Input
@@ -137,6 +155,7 @@ export default function LoginPage() {
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Logging in..." : t("login")}
+                {isLoading ? t("loggingIn") : t("login")}
               </Button>
             </motion.form>
           )}
@@ -144,7 +163,10 @@ export default function LoginPage() {
 
         {step === 1 && (
           <div className='mt-6 text-center text-sm'>
-            <p className="text-gray-500">Don&apos;t have an account? <a href="#" className="text-primary-600 font-medium hover:underline">Sign up</a></p>
+            <p className="text-gray-500">
+              {t("noAccount")}{" "}
+              <a href="#" className="text-primary-600 font-medium hover:underline">{t("signUp")}</a>
+            </p>
           </div>
         )}
       </motion.div>

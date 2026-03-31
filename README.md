@@ -11,5 +11,3 @@
 - [alpine](https://alpine-registry.vercel.app/)
 
 - [tabler icons](https://tabler.io/icons)
-
-# [demo](https://blunt-six.vercel.app/login)
