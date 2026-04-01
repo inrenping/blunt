@@ -24,6 +24,7 @@
     "changeEmail": "修改邮箱",
     "loggingIn": "登录中...",
     "noAccount": "还没有账号？",
-    "signUp": "注册"
+    "signUp": "注册",
+    "loginWith": "通过 {provider} 登录"
   }
 }

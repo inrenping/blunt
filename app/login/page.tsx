@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { storage } from '@/lib/storage';
+import { IconBrandGoogleFilled, IconBrandGithubFilled } from "@tabler/icons-react"
 
 export default function LoginPage() {
   const [step, setStep] = useState(1);
@@ -100,11 +101,17 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <Button variant="outline" type="button" className="w-full">
-                Google
+              <Button variant="outline" type="button" className="w-full relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2">
+                  <IconBrandGoogleFilled className="h-4 w-4" />
+                </span>
+                <span className="mx-auto">{t("loginWith", { provider: "Google" })}</span>
               </Button>
-              <Button variant="outline" type="button" className="w-full">
-                GitHub
+              <Button variant="outline" type="button" className="w-full relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2">
+                  <IconBrandGithubFilled className="h-4 w-4" />
+                </span>
+                <span className="mx-auto">{t("loginWith", { provider: "GitHub" })}</span>
               </Button>
 
               <div className='space-y-2'>

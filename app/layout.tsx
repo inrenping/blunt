@@ -35,9 +35,9 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <header className="flex items-center justify-between p-4 border-b">
+        {/* <header className="flex items-center justify-between p-4 border-b">
           <h1 className="text-lg font-semibold">Blunt</h1>
-        </header>
+        </header> */}
         <NextIntlClientProvider messages={messages}>
           <Providers>
             {children}
